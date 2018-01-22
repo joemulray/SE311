@@ -1,0 +1,46 @@
+#SE 311 Software Architechure II
+
+Components:
+- Packages are Components
+
+Module:
+independent task assignment
+couple system into modules
+
+Command Pattern:
+enables us to redo and undo any step of any operations
+
+#Abstraction and Modularization
+Software Design
+OO Design
+
+Design Principles:
+	- General design principles:
+		Information hiding
+		low coupling. high cohesion
+		least of knowledge
+
+	- OO design Principles (SOLID):
+		Sigle responcibility Principle
+		Open closed Principle
+		Liskov subsitition Principle
+		Interfaces Segregation Principle
+		Dependency Inversion Principle
+
+------------>
+============>
+
+could be java interface or abstract class
+
+concrete class 
+abstract class - can never instanciate an abstract class
+
+object is the creation of class in memory
+class is the description
+
+Filed cystal
+
+Compisition eg (body part does not exists without a human, human does not exists body part does not exists)
+Aggrigration
+Dotted line with arrow, 
+ 
