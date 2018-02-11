@@ -1,34 +1,35 @@
-
 import java.util.*;
+import java.io.*;
+public class Alphabetizer extends Filter
+{
 
-/**
- * 
- */
-public class Alphabetizer {
-
-    private CircularShift shift; //shifting component
-    private ArrayList<String> sorted = new ArrayList<String>(); //non sorted data
- 
-    /**
-     * Default constructor
-     */
-    public Alphabetizer() {}
-
-    public void Alphabetizer(CircularShift shift){
-    //declaring attributes
-       this.shift = shift;
-       this.sorted = shift.getLists();
-
-    }
+	public Alphabetizer(Pipe input_, Pipe output_) {
+		super(input_, output_);
+		// TODO Auto-generated constructor stub
+	}
 
 
-    public void sort(){
-        //sorting method
-        Collections.sort(this.sorted, String.CASE_INSENSITIVE_ORDER); //case order does not matter
-    }
+	@Override
+	protected void transform()
+	{
+		List<String> lines = new ArrayList<String>();
+		
+		try {
+		String line;
+		while((line = (String) input_.get()) != null) {
+			lines.add(line);
+		}
+		
+		}
+		catch(Exception e) {}
 
-    public ArrayList<String> getSorted(){
-        return this.sorted; //return the sorted array
-    }
+		java.util.Collections.sort(lines, String.CASE_INSENSITIVE_ORDER);
 
+		for (String outputline : lines) {
+			output_.put(outputline);
+		}
+		output_.put(null);
+
+	}
+	
 }

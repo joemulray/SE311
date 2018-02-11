@@ -2,76 +2,73 @@
 import java.util.*;
 import java.io.*;
 
-/**
- * 
- */
-public class CircularShift {
+
+public class CircularShift extends Filter{
+
+	public CircularShift(Pipe input_, Pipe output_) {
+		super(input_, output_);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	protected void transform()
+	{
+		String line="";
+		do
+		{
+			try
+			{
+				line = (String)input_.get();
+			} catch (Exception e) {
+				System.out.println("Error: " + e);
+			}
+			List<String> finalString;
+			
+			if (line != null)
+			{	
+				//get the final string from the arraylist
+				finalString = shifts(line);
+
+				//for each line in the finalstring array add to output objectr
+				for (String lines : finalString) {
+					output_.put(lines);
+
+				}
+			}
+
+		} while (line != null);
+
+	}
+	
+
+	private List<String> shifts(String line)
+	{
+		String wordslist[] = line.split(" ");
 
 
-    private LineStorage shifts;
-    private ArrayList<String> allshifts = new ArrayList<String>();
-    private ArrayList<String> data = new ArrayList<String>();
+		List<String> returnString = new ArrayList<String>();
 
-    /**
-     * Default constructor
-     */
-    public void CircularShift() {
-    }
+		for (int index = 0; index < wordslist.length; index++)
+		{
+		int temp = index;
+		String toline = "";
+		do {
+			
+			if (toline.length() > 0)
+					toline = toline + " ";
 
+			toline = toline + wordslist[temp];
 
-    public void CircularShift(LineStorage lines){
-         this.shifts = lines;
-         this.data = lines.getData();   //declaring attributes
-    }
+			temp = ((temp+1) % wordslist.length);
 
-    public void insert(String line) {
-        allshifts.add(line); //insert line into final array of lines
+			} while (temp != index);
 
-    }
+			returnString.add(toline);
 
+		}
 
-    public void shifts(){
-        //function to shift array and build new output
+		return returnString;
+	} 
 
-        for (String line : this.data){
-
-
-                StringTokenizer tokens = new StringTokenizer(line, " ");
-                String[] words = new String[tokens.countTokens()];
-                int index = 0;
-                while(tokens.hasMoreTokens()){
-                    words[index] = tokens.nextToken();
-                    ++index;
-                }
-
-                //convert array into arraylist
-                ArrayList<String> wordsArray = new ArrayList<String>(Arrays.asList(words));
-
-                for(int pos =0; pos< wordsArray.size(); pos++){
-
-                    //shift array positions
-                    String temp = "";
-                    temp = wordsArray.get(0);
-                    wordsArray.remove(0);
-                    wordsArray.add(temp);
-                    
-
-                    //build string to add to array
-                    String finalstring = "";
-                    for(String word1: wordsArray){
-                        finalstring += word1 + " ";
-                    }
-
-                    insert(finalstring);    //insert the final string
-                }
-
-        }
-
-
-    }
-
-    public ArrayList<String> getLists(){
-        return this.allshifts;  //return the unsorted shifts
-    }
 
 }

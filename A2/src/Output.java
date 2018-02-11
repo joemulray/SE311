@@ -5,17 +5,60 @@ import java.io.*;
 /**
  * 
  */
-public abstract class Output {
+public class Output extends Filter {
 
-    //output attributes
-    protected ArrayList<String> outArray = new ArrayList<String>();
-    protected Alphabetizer sorted;
+    private String outstream;
+    ArrayList<String> data = new ArrayList<String>();
 
-    public Output(){}
+	public Output(Pipe input_ , Pipe output_){
+        super(input_, null);
+	}
 
-    //abstract methods
-    public abstract void print();
-    public abstract void setSorted(Alphabetizer sorted);
+protected void setFile(String file){
+	
+	this.outstream = file;
+}
 
+
+@Override
+protected void transform()
+{
+	
+	try {
+		
+    String line;
+    while((line = (String)input_.get()) != null){
+ 
+    		data.add(line);
+	
+	}
+	}
+	catch(Exception e){System.out.println("Error: "+ e) ;}
+	
+
+    }
+
+
+public void print(){
+	
+	try {
+		
+		FileOutputStream fileStream = new FileOutputStream(outstream);
+		OutputStreamWriter outputStream = new OutputStreamWriter(fileStream);
+		
+		
+		for(String line: data) {
+		
+		outputStream.write(line + "\n");
+		outputStream.flush();
+		}
+		outputStream.close();
+		
+		}
+		catch(Exception e){System.out.println("Error: "+ e) ;}
+	
+	
+	
+}
 
 }

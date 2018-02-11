@@ -1,5 +1,12 @@
 Joseph Mulray
-Assignment 2
-KWIC Pipe and Filter
-Febuary 5th 2018
+SE311 A2
+Pipe and Filter
 
+
+Files: src/ Hold all java files for program
+UML: UML.png
+
+Everything is run on user input, did not use command line arguments to be passed in.
+Some issues with running threads and outputing to file sometimes will output other times will not.
+
+Path can be full path or file within the directory.
