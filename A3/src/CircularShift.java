@@ -5,11 +5,11 @@ import java.io.*;
 /**
  * 
  */
-public class CircularShift {
+public class CircularShift implements Observer{
 
 
     private LineStorage shifts;
-    private ArrayList<String> allshifts = new ArrayList<String>();
+    private ArrayList<String> allshifts;
     private ArrayList<String> data = new ArrayList<String>();
 
     /**
@@ -21,26 +21,33 @@ public class CircularShift {
 
     public void CircularShift(LineStorage lines){
          this.shifts = lines;
-         this.data = lines.getData();   //declaring attributes
+         this.data = this.shifts.getLines();   //declaring attributes
     }
 
-
     public void shifts()
-    {
+    {   
+        this.allshifts = new ArrayList<String>();
         List<String> sentences = null;
-        for(String line : this.data){
-            sentences = build(line);
+        // for(String line : this.data){
+
+            // System.out.println("Line: " + line);
+
+            sentences = build(this.data);
 
             for(String finalline: sentences)
                 allshifts.add(finalline);
-        }
+        // }
     }
     
 
-    private List<String> build(String line)
-    {
+    private List<String> build(ArrayList<String> lines)
+    {   
+        ArrayList<String> finalstrings = new ArrayList<String>();
+
+        for(String line : lines){
+
         String wordslist[] = line.split(" ");
-        List<String> returnString = new ArrayList<String>();
+        // List<String> returnString = new ArrayList<String>();
 
         for (int index = 0; index < wordslist.length; index++)
         {
@@ -53,15 +60,25 @@ public class CircularShift {
             toline = toline + wordslist[temp];
             temp = ((temp+1) % wordslist.length);
             } while (temp != index);
-            returnString.add(toline);
+            // returnString.add(toline);
+            finalstrings.add(toline);
         }
-        return returnString;
+
+        }
+        return finalstrings;
     } 
 
 
 
-    public ArrayList<String> getLists(){
+    public ArrayList<String> getLines(){
         return this.allshifts;  //return the unsorted shifts
     }
 
+
+    @Override
+    public void update(Observable observer, Object arg){
+        System.out.println("Observer called");
+        this.shifts = (LineStorage) observer;
+        this.data = this.shifts.getLines();
+    }
 }

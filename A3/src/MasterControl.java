@@ -23,14 +23,14 @@ public class MasterControl {
 
     //get input and output methods
     Input input = master.getInputmethod();
+    if(input == null) return;
+
     Output output = master.getOutputMethod();
 
     //build program using methods
     master.build(input, output);
 
     }
-
-
 
     public Output getOutputMethod() {
     
@@ -66,6 +66,65 @@ public class MasterControl {
     }
 
 
+    public void interactive(){
+
+        LineStorage lineStorage = new LineStorage();
+        CircularShift circularShift = new CircularShift();
+        Alphabetizer alphabetizer = new Alphabetizer();
+        Output consoleoutput = new ConsoleOutput();
+
+        lineStorage.addObserver(circularShift);
+        Scanner keyboard = new Scanner(System.in);
+        boolean isTrue = true;
+        while(isTrue){
+            System.out.print("Add, Delete, Print, Quit: ");
+            String choice = keyboard.nextLine();
+            String line;
+                switch(choice){
+
+                    case "a":
+                    case "add":
+                        System.out.print("> ");
+                        line = keyboard.nextLine();
+                        lineStorage.attach(line);
+                        //dont know if add to total or just keep the same
+                        break;
+
+                    case "d":
+                    case "delete":
+                        System.out.print("> ");
+                        line = keyboard.nextLine();
+                        lineStorage.detach(line);
+                        break;
+                    case "p":
+                    case "print":
+
+                        circularShift.shifts();
+
+                        alphabetizer.Alphabetizer(circularShift);   //sort the data
+                        alphabetizer.sort();
+
+                        consoleoutput.setSorted(alphabetizer);
+                        consoleoutput.print();
+
+                        break;
+                    case "q":
+                    case "quit":
+                        isTrue=false;
+                        break;
+                    default:
+                        System.out.println("Invalid input");
+                        // return interactive();
+                }
+
+            }
+
+
+
+
+    }
+
+
     public Input getInputmethod(){
         //input method
 
@@ -75,6 +134,7 @@ public class MasterControl {
         System.out.println("\nDo you want to read from text file or console?");
         System.out.println("1) Text File");
         System.out.println("2) Console Input");
+        System.out.println("3) Interactive Console");
 
         String choice = keyboard.nextLine();
 
@@ -100,9 +160,16 @@ public class MasterControl {
 
             break;
 
+            case "3":
+                interactive();
+                inputmethod = null;
+                break;
+
             //default recall input method
             default:
                 return getInputmethod();
+
+
         }
 
         return inputmethod; //return the input method selected
@@ -117,63 +184,19 @@ public class MasterControl {
             CircularShift circularShift = new CircularShift();
             Alphabetizer alphabetizer = new Alphabetizer();
 
-            // lineStorage.LineStorage(inputmethod);  
-            ArrayList<String> data = inputmethod.getLines();
+            lineStorage.LineStorage(inputmethod);  
 
-            for(String line : data){
-                System.out.println("\n" + line);
-                System.out.print("Add, Delete, Print, Quit: ");
-                choice = keyboard.nextLine();
+            outmethod.setSorted(alphabetizer);
+            outmethod.print();
 
-                switch(choice){
+            circularShift.CircularShift(lineStorage);   //shift the data
+            circularShift.shifts();
 
-                    case "a":
-                    case "add":
-                        System.out.println("add");
-                        lineStorage.attach(line);
-                        //dont know if add to total or just keep the same
-                        break;
+            alphabetizer.Alphabetizer(circularShift);   //sort the data
+            alphabetizer.sort();
 
-                    case "d":
-                    case "delete":
-                        System.out.println("delete");
-                        lineStorage.detach(line);
-                        break;
-                    case "p":
-                    case "print":
-                        System.out.println("print");
-
-                        circularShift.CircularShift(lineStorage);   //shift the data
-                        circularShift.shifts();
-
-                        alphabetizer.Alphabetizer(circularShift);   //sort the data
-                        alphabetizer.sort();
-
-                        outmethod.setSorted(alphabetizer);
-                        outmethod.print();
-
-                        break;
-                    case "q":
-                    case "quit":
-                        System.out.println("quit");
-                        break;
-                    default:
-                        System.out.println("default");
-                }
-
-            }
-
-            // outmethod.setSorted(alphabetizer);
-            // outmethod.print();
-
-            // circularShift.CircularShift(lineStorage);   //shift the data
-            // circularShift.shifts();
-
-            // alphabetizer.Alphabetizer(circularShift);   //sort the data
-            // alphabetizer.sort();
-
-            // outmethod.setSorted(alphabetizer);
-            // outmethod.print();      //print data
+            outmethod.setSorted(alphabetizer);
+            outmethod.print();      //print data
         }
 
 }

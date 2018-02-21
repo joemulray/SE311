@@ -4,7 +4,7 @@ import java.util.*;
 /**
  * 
  */
-public class Alphabetizer {
+public class Alphabetizer{
 
     private CircularShift shift; //shifting component
     private ArrayList<String> sorted = new ArrayList<String>(); //non sorted data
@@ -17,7 +17,7 @@ public class Alphabetizer {
     public void Alphabetizer(CircularShift shift){
     //declaring attributes
        this.shift = shift;
-       this.sorted = shift.getLists();
+       this.sorted = shift.getLines();
 
     }
 

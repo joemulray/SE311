@@ -4,11 +4,10 @@ import java.util.*;
 /**
  * 
  */
-public class LineStorage {
+public class LineStorage extends Observable{
 
     private ArrayList<String> lines = new ArrayList<String>();
     private Input input;    //variables
-    
 
     /**
      * Default constructor
@@ -24,15 +23,16 @@ public class LineStorage {
     }
 
 
-    public ArrayList<String> getData(){
+    public ArrayList<String> getLines(){
         // return arraylist of lines
         return this.lines;  
     }
 
 
-
     public void attach(String line){
         this.lines.add(line);
+        setChanged();
+        notifyObservers();
     }
 
     public void detach(String line){
@@ -44,11 +44,15 @@ public class LineStorage {
                     break;
                  }
         }
+
+        setChanged();
+        notifyObservers();
     }
 
+
+
+
     // public void notify(){
-    //     CircularShift circularShift = new CircularShift();
-    //     Alphabetizer alphabetizer = new Alphabetizer();
 
     // }
 
