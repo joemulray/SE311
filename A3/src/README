@@ -1,0 +1,20 @@
+Joseph Mulray
+Assignment 3
+February 23 2018
+SE311
+
+src/: All source files
+UML: UML3.png
+
+
+Included makefile in build all have to do is run make. Did not come across any issues during program, tested using sample
+session. Updated classes to have Observer pattern and Observerable to just notifity observers when given a change to a line. Still included file named <test> if still want to make sure two options still work
+
+ 
+# Makefile Commands:
+view:
+  view source code
+clean:
+  remove .class files
+run:
+  run and execute program

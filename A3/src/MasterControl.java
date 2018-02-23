@@ -67,17 +67,20 @@ public class MasterControl {
 
 
     public void interactive(){
+        //interactive method
 
+        //create class objects
         LineStorage lineStorage = new LineStorage();
         CircularShift circularShift = new CircularShift();
         Alphabetizer alphabetizer = new Alphabetizer();
         Output consoleoutput = new ConsoleOutput();
 
+        //add the observer
         lineStorage.addObserver(circularShift);
         Scanner keyboard = new Scanner(System.in);
         boolean isTrue = true;
         while(isTrue){
-            System.out.print("Add, Delete, Print, Quit: ");
+            System.out.print("\nAdd, Delete, Print, Quit: ");
             String choice = keyboard.nextLine();
             String line;
                 switch(choice){
@@ -114,7 +117,7 @@ public class MasterControl {
                         break;
                     default:
                         System.out.println("Invalid input");
-                        // return interactive();
+                        interactive();
                 }
 
             }
@@ -185,9 +188,6 @@ public class MasterControl {
             Alphabetizer alphabetizer = new Alphabetizer();
 
             lineStorage.LineStorage(inputmethod);  
-
-            outmethod.setSorted(alphabetizer);
-            outmethod.print();
 
             circularShift.CircularShift(lineStorage);   //shift the data
             circularShift.shifts();

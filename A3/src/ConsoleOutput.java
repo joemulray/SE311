@@ -6,11 +6,6 @@ import java.util.*;
  */
 public class ConsoleOutput extends Output {
 
-
-    // private String output;
-    // private ArrayList <String> data;
-
-
     /**
      * Default constructor
      */

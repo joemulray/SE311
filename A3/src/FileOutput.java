@@ -24,7 +24,7 @@ public class FileOutput extends Output {
 
     @Override
     public void print() {
-        
+
         //prompt file name
         Scanner keyboard = new Scanner(System.in);
         System.out.print("Enter file name: ");

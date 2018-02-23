@@ -28,15 +28,10 @@ public class CircularShift implements Observer{
     {   
         this.allshifts = new ArrayList<String>();
         List<String> sentences = null;
-        // for(String line : this.data){
-
-            // System.out.println("Line: " + line);
-
-            sentences = build(this.data);
+         sentences = build(this.data);
 
             for(String finalline: sentences)
                 allshifts.add(finalline);
-        // }
     }
     
 
@@ -47,7 +42,6 @@ public class CircularShift implements Observer{
         for(String line : lines){
 
         String wordslist[] = line.split(" ");
-        // List<String> returnString = new ArrayList<String>();
 
         for (int index = 0; index < wordslist.length; index++)
         {
@@ -77,7 +71,7 @@ public class CircularShift implements Observer{
 
     @Override
     public void update(Observable observer, Object arg){
-        System.out.println("Observer called");
+
         this.shifts = (LineStorage) observer;
         this.data = this.shifts.getLines();
     }
