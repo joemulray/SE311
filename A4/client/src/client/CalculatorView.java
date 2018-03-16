@@ -2,6 +2,7 @@ package client;
 
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 public class CalculatorView extends JFrame{
 	private JLabel resultDisplay;
@@ -12,7 +13,7 @@ public class CalculatorView extends JFrame{
 
 		JPanel displayPanel = new JPanel();
 		add(displayPanel, BorderLayout.NORTH);
-
+		
 		resultDisplay = new JLabel("0");
 		displayPanel.add(resultDisplay);
 
@@ -41,15 +42,13 @@ public class CalculatorView extends JFrame{
 	}
 	
 	//adding listener
-	public void attachListener(ActionListener listener) {
+	public void attachListener(ActionListener  listener) {
 		for(Component b: buttonGroup.getComponents()) {
-			
-			//((JButton)b).addActionListener(listener);
+			 ((JButton)b).addActionListener(listener);
 		}
 	}
 	
 	public void updateResult(String value) {
-		
 		resultDisplay.setText(value);
 	}
 
