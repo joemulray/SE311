@@ -3,12 +3,17 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 
-import client.CalcState;
+import client.CalcContext;
+import client.State;
 
-public class Calculate implements CalcState{
+public class Calculate extends State{
+
+	public Calculate(CalcContext context) {
+		super(context);
+	}
 
 	@Override
-	public CalcState nextState(ActionEvent e) {
+	public void nextState(ActionEvent e) {
 		
 		String button = ((JButton)e.getSource()).getText();
 		switch(button) {
@@ -23,16 +28,22 @@ public class Calculate implements CalcState{
 		case "8":
 		case "9":
 		case "0":
-			return new FirstOperand();
+			this.context.setState(new FirstOperand(this.context));
+			break;
 		case "+":
 		case "-":
 		case "/":
 		case "*":
 		case "C":
-			return new Start();
+			this.context.setFirst("");
+			this.context.setSecond("");
+			this.context.getView().updateResult(" ");
+			this.context.setState(new Start(this.context));
+			break;
 			
 		default:
-			return new Error();
+			this.context.setState(new Error(this.context));
+			break;
 		
 		}
 	}

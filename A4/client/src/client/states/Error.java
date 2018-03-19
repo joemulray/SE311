@@ -3,21 +3,31 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 
-import client.CalcState;
+import client.CalcContext;
+import client.State;
 
-public class Error implements CalcState{
+public class Error extends State{
+
+	public Error(CalcContext context) {
+		super(context);
+	}
 
 	@Override
-	public CalcState nextState(ActionEvent e) {
+	public void nextState(ActionEvent e) {
 
 		String button = ((JButton)e.getSource()).getText();
 		switch(button) {
 		
 		case "C":
-			return new Start();
+			this.context.setFirst("");
+			this.context.setSecond("");
+			this.context.getView().updateResult("");
+			this.context.setState(new Start(this.context));
+			break;
 			
 		default:
-			return new Error();
+			this.context.setState(new Error(this.context));
+			break;
 		
 		}
 		

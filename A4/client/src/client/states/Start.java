@@ -1,14 +1,25 @@
 package client.states;
 import java.awt.event.ActionEvent;
-import client.CalcState;
+
+import client.CalcContext;
+import client.State;
 import javax.swing.*;
 
-public class Start implements CalcState{
+public class Start extends State{
+
+	public Start(CalcContext context) {
+		super(context);
+	}
 
 	@Override
-	public CalcState nextState(ActionEvent e) {
+	public void nextState(ActionEvent e) {
 		
 		String button = ((JButton)e.getSource()).getText();
+		
+		
+		System.out.println("STARTOPERNAD");
+		System.out.println(button);
+		
 		switch(button) {
 		
 		case "1":
@@ -21,9 +32,13 @@ public class Start implements CalcState{
 		case "8":
 		case "9":
 		case "0":
-			return new FirstOperand();
+			this.context.setFirst(button);
+			this.context.getView().updateResult(button);
+			this.context.setState(new FirstOperand(this.context));
+			break;
 		default:
-			return new Start();
+			this.context.setState(new Start(this.context));
+			break;
 		
 		}
 		
