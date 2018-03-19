@@ -11,6 +11,4 @@ public abstract class State {
 	
 	public void nextState(ActionEvent e) {}
 	
-	
-	
 }

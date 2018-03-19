@@ -14,7 +14,7 @@ public class Start extends State{
 	@Override
 	public void nextState(ActionEvent e) {
 		
-		String button = ((JButton)e.getSource()).getText();
+		String button = e.getActionCommand();
 		
 		
 		System.out.println("STARTOPERNAD");
@@ -38,6 +38,7 @@ public class Start extends State{
 			break;
 		default:
 			this.context.setState(new Start(this.context));
+			this.context.getView().updateResult("");
 			break;
 		
 		}

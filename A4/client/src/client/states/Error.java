@@ -15,7 +15,7 @@ public class Error extends State{
 	@Override
 	public void nextState(ActionEvent e) {
 
-		String button = ((JButton)e.getSource()).getText();
+		String button = e.getActionCommand();
 		switch(button) {
 		
 		case "C":
@@ -27,6 +27,7 @@ public class Error extends State{
 			
 		default:
 			this.context.setState(new Error(this.context));
+			this.context.getView().updateResult("ERR");
 			break;
 		
 		}

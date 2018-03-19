@@ -16,7 +16,7 @@ public class FirstOperand extends State{
 	@Override
 	public void nextState(ActionEvent e) {
 		
-		String button = ((JButton)e.getSource()).getText();
+		String button = e.getActionCommand();
 		System.out.println("FIRSTOPERNAD");
 		System.out.println(button);
 		
@@ -51,6 +51,7 @@ public class FirstOperand extends State{
 			
 		default:
 			this.context.setState(new Error(this.context));
+			this.context.getView().updateResult("ERR");
 			 break;
 		
 		}

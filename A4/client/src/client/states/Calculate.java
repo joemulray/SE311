@@ -15,7 +15,7 @@ public class Calculate extends State{
 	@Override
 	public void nextState(ActionEvent e) {
 		
-		String button = ((JButton)e.getSource()).getText();
+		String button = e.getActionCommand();
 		switch(button) {
 		
 		case "1":
@@ -28,7 +28,10 @@ public class Calculate extends State{
 		case "8":
 		case "9":
 		case "0":
+			this.context.setFirst(button);
+			this.context.setSecond("");
 			this.context.setState(new FirstOperand(this.context));
+			this.context.getView().updateResult(button);
 			break;
 		case "+":
 		case "-":
@@ -43,6 +46,7 @@ public class Calculate extends State{
 			
 		default:
 			this.context.setState(new Error(this.context));
+			this.context.getView().updateResult("ERR");
 			break;
 		
 		}

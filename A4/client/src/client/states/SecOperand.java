@@ -15,7 +15,8 @@ public class SecOperand extends State{
 	@Override
 	public void nextState(ActionEvent e) {
 		
-		String button = ((JButton)e.getSource()).getText();
+		String button = e.getActionCommand();
+		
 		switch(button) {
 		
 		case "1":
@@ -49,6 +50,7 @@ public class SecOperand extends State{
 			break;
 		default:
 			this.context.setState(new Error(this.context));
+			this.context.getView().updateResult("ERR");
 			break;
 		
 		}

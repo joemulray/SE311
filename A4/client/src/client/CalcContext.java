@@ -1,25 +1,28 @@
 package client;
 
 import javax.swing.*;
-
-import com.sun.glass.ui.SystemClipboard;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import client.states.*;
+import client.visitor.*;
 import java.util.*;
-import javax.script.*;
+import java.net.*;
+import java.io.*;
 
 
 public class CalcContext implements ActionListener{
 
 	private State current = new Start(this);
 	private CalculatorView view;
-	private String firstop = "";
-	private String secop = "";
-	private String operand;
-	private ArrayList<String> operation = new ArrayList<String>();
-	private ArrayList<String> currentOP = new ArrayList<String>();
+
+	private ArrayList<Operation> currentoperation = new ArrayList<Operation>();
+	private ArrayList<Operation> operation = new ArrayList<Operation>();
+	
+	private Operation firstoperation = new Operand();
+	private Operation secondoperation = new Operand();
+	private Operation operator = new Operator();
+	
+	
 	
 	CalcContext(){}
 	
@@ -34,11 +37,10 @@ public class CalcContext implements ActionListener{
 		return this.current;
 	}
 	
-	public String getFirst(){ return this.firstop; }
-	public String getSecond() {return this.secop; }
-	public void setFirst(String first){ this.firstop = first;}
-	public void setSecond(String second) { this.secop = second;}
-	
+	public String getFirst(){ return this.firstoperation.getValue(); }
+	public String getSecond() {return this.secondoperation.getValue(); }
+	public void setFirst(String first){ this.firstoperation.setValue(first); }
+	public void setSecond(String second) { this.secondoperation.setValue(second);}
 	
 	
 	public CalculatorView getView(){
@@ -48,108 +50,116 @@ public class CalcContext implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e)
 	 {
-		  String value = ((JButton)e.getSource()).getText();
+		  String value = e.getActionCommand();
 		  
-		  
-		  if(("*+-/".contains(value)) && isNotNull(firstop, secop, operand)){
+		  if(("*+-/".contains(value)) && isNotNull(firstoperation.getValue(), secondoperation.getValue(), operator.getValue())){
 			  
 			  System.out.println("Given multiple commands");
 			  
 			  if(operation.isEmpty()){
-				  
-			  operation.addAll(Arrays.asList(firstop,operand,secop));
-			  currentOP.addAll(Arrays.asList(firstop, operand,secop));
+			
+			  operation.addAll(Arrays.asList(firstoperation ,operator,secondoperation));
+			  currentoperation.addAll(Arrays.asList(firstoperation, operator, secondoperation));
 			  
 			  }
 			  else {
 				  System.out.println("not is isemptyy");
-				  operation.add(operand);
-				  operation.add(secop);
+				  operation.add(operator);
+				  operation.add(secondoperation);
 				  
-				  currentOP.add(1, operand);
-				  currentOP.add(2,secop);
+				  currentoperation.add(1,operator);
+				  currentoperation.add(2, secondoperation);
 			  }
 			  
 			  
 			  calculate();
-			  firstop = secop;
-			  secop = "";
-
-		}
+			  firstoperation.setValue(secondoperation.getValue());
+			  secondoperation.setValue("");
+		
+		  }
 		  
 		  this.current.nextState(e);
 		  
 		  if(this.current instanceof NextOperand){
-			  this.operand = value;
+			  this.operator.setValue(value);
+			  
 		  }		  
 		  else if(current instanceof Calculate){
 			  System.out.println("calc");
 
 			  if(!operation.isEmpty()){
-				  operation.addAll(Arrays.asList(operand,secop));
-				  currentOP.addAll(Arrays.asList(operand,secop));
-				  
+				  operation.addAll(Arrays.asList(operator,secondoperation));
+				  currentoperation.addAll(Arrays.asList(operator, secondoperation));
+
 			  }
 			  else {
-				  operation.addAll(Arrays.asList(firstop,operand,secop));
-				  currentOP.addAll(Arrays.asList(firstop, operand,secop));
+				  operation.addAll(Arrays.asList(firstoperation,operator,secondoperation));
+				  currentoperation.addAll(Arrays.asList(firstoperation, operator, secondoperation));
 			  }
 			 
 			
-			  calculate();
-	
+			  double calculated = calculate();
+			  System.out.println("CALCAFTER");
+			  System.out.println(calculated);
+			  
+			  for(Operation op: operation)
+				  System.out.print(" " + op.getValue());
+			  
+			  Operation equals = new Operator("=");
+			  Operation total = new Operand(Double.toString(calculated));
+			  
+			  operation.addAll(Arrays.asList(equals, total));
+			  
 			  operation.removeAll(operation);
-			  currentOP.removeAll(currentOP);
-			  firstop="";
-			  secop="";
-			  operand=null;
+			  currentoperation.removeAll(currentoperation);
+			  firstoperation.setValue("");
+			  secondoperation.setValue("");
+			  operator.setValue(null);
 		  }
 		  
 	 }
 	
-	private boolean isNotNull(String firstop, String secop, String operand){
+	private boolean isNotNull( String firstop, String secop, String operand){
 		if((firstop != "" && secop != "" ) && operand != null)
 			return true;
 		else
 			return false;
 	}
 	
-	public void calculate(){
+	public double calculate(){
 		
-		System.out.println("Calculate");
 		double total=0;
 		
-			int index =0;
-			double firstDigit = Double.parseDouble(currentOP.get(index));
-			String operand = currentOP.get(index+1);
-			double secDigit = Double.parseDouble(currentOP.get(index+2));
-				
-			switch(operand){
+			double firstdigit = Double.parseDouble(currentoperation.get(0).getValue());
+			double seconddigit = Double.parseDouble(currentoperation.get(2).getValue());
+			String operator = currentoperation.get(1).getValue();
+			
+			switch(operator){
 				case "+":
-					total = firstDigit + secDigit;
+					total = firstdigit + seconddigit;
 					break;
 				case "-":
-					total = firstDigit - secDigit;
+					total = firstdigit - seconddigit;
 					break;
-					
 				case "*":
-					total = firstDigit * secDigit;
+					total = firstdigit * seconddigit;
 					break;
 				case "/":
-					total = firstDigit / secDigit;
-					
+					total = firstdigit / seconddigit;
 				default:
 					break;
-	
 			}
+				
+			Operation updated = new Operand(Double.toString(total));
+			currentoperation.set(0, updated);
+			currentoperation.remove(1);
+			currentoperation.remove(1);
 						
-			currentOP.set(index, Double.toString(total));
-						currentOP.remove(index+1);
-						currentOP.remove(index+1);
-
 						
 		System.out.println("total : " + total);
 		view.updateResult(Double.toString(total));
+		return total;
 	}
-
+	
+	
 }
