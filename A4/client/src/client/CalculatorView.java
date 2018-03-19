@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 
 public class CalculatorView extends JFrame{
+
+	private static final long serialVersionUID = 1L;
 	private JLabel resultDisplay;
 	private JPanel buttonGroup;
 
@@ -40,7 +42,6 @@ public class CalculatorView extends JFrame{
 
 	}
 	
-	//adding listener
 	public void attachListener(ActionListener  listener) {
 		for(Component b: buttonGroup.getComponents()) {
 			 ((JButton)b).addActionListener(listener);

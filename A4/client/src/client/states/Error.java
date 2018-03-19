@@ -1,7 +1,6 @@
 package client.states;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JButton;
 
 import client.CalcContext;
 import client.State;
@@ -15,8 +14,8 @@ public class Error extends State{
 	@Override
 	public void nextState(ActionEvent e) {
 
-		String button = e.getActionCommand();
-		switch(button) {
+		String value = e.getActionCommand();
+		switch(value) {
 		
 		case "C":
 			this.context.setFirst("");

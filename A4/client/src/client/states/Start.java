@@ -1,9 +1,7 @@
 package client.states;
 import java.awt.event.ActionEvent;
-
 import client.CalcContext;
 import client.State;
-import javax.swing.*;
 
 public class Start extends State{
 
@@ -14,13 +12,9 @@ public class Start extends State{
 	@Override
 	public void nextState(ActionEvent e) {
 		
-		String button = e.getActionCommand();
-		
-		
-		System.out.println("STARTOPERNAD");
-		System.out.println(button);
-		
-		switch(button) {
+		String value = e.getActionCommand();
+
+		switch(value) {
 		
 		case "1":
 		case "2":
@@ -32,8 +26,8 @@ public class Start extends State{
 		case "8":
 		case "9":
 		case "0":
-			this.context.setFirst(button);
-			this.context.getView().updateResult(button);
+			this.context.setFirst(value);
+			this.context.getView().updateResult(value);
 			this.context.setState(new FirstOperand(this.context));
 			break;
 		default:
@@ -44,5 +38,4 @@ public class Start extends State{
 		}
 		
 	}
-
 }

@@ -1,8 +1,5 @@
 package client.states;
 import java.awt.event.ActionEvent;
-
-import javax.swing.JButton;
-
 import client.CalcContext;
 import client.State;
 
@@ -15,9 +12,9 @@ public class SecOperand extends State{
 	@Override
 	public void nextState(ActionEvent e) {
 		
-		String button = e.getActionCommand();
+		String value = e.getActionCommand();
 		
-		switch(button) {
+		switch(value) {
 		
 		case "1":
 		case "2":
@@ -29,8 +26,8 @@ public class SecOperand extends State{
 		case "8":
 		case "9":
 		case "0":
-			this.context.getView().updateResult(context.getSecond() + button);
-			this.context.setSecond(context.getSecond() + button);
+			this.context.getView().updateResult(context.getSecond() + value);
+			this.context.setSecond(context.getSecond() + value);
 			break;
 		case "+":
 		case "-":

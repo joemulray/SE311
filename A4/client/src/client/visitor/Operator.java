@@ -1,5 +1,4 @@
 package client.visitor;
-
 import client.Visitor;
 
 public class Operator extends Operation{
