@@ -92,7 +92,7 @@ public class CalcContext extends JPanel implements ActionListener{
 		  
 		  if(current instanceof Start) {
 			  System.out.println("start");
-			  view.updateResult("0");
+			  view.updateResult(" ");
 			  firstop = null;
 			  secop = null;
 		  }

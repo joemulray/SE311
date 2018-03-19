@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 
 import client.CalcState;
+import client.CalculatorView;
 
 public class FirstOperand implements CalcState{
 

@@ -14,7 +14,7 @@ public class CalculatorView extends JFrame{
 		JPanel displayPanel = new JPanel();
 		add(displayPanel, BorderLayout.NORTH);
 		
-		resultDisplay = new JLabel("0");
+		resultDisplay = new JLabel(" ");
 		displayPanel.add(resultDisplay);
 
 		//create the buttons
@@ -37,7 +37,6 @@ public class CalculatorView extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(300,400);
 		setVisible(true);
-
 
 	}
 	
