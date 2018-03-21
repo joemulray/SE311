@@ -13,10 +13,7 @@ public class FirstOperand extends State{
 	public void nextState(ActionEvent e) {
 		
 		String value = e.getActionCommand();
-		System.out.println("FIRSTOPERNAD");
-		System.out.println(value);
-		
-		
+				
 		switch(value) {
 		
 		case "1":
